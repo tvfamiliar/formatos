@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Buscador de Streams (M3U8, MPD, MP4, TS) + Reproductor HLS.js</title>
+<style>
+    body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+    input, button { padding: 10px; font-size: 16px; }
+    #result { margin-top: 20px; white-space: pre-line; }
+    video { width: 100%; max-height: 400px; margin-top: 20px; background: black; }
+</style>
+
+<!-- HLS.js -->
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+</head>
+<body>
+
+<h2>Buscador de Streams (.m3u8 .mpd .mp4 .ts)</h2>
+
+<input id="inputUrl" type="text" placeholder="Ingresa la URL a analizar" size="60">
+<button onclick="buscar()">Buscar Streams</button>
+
+<div id="result"></div>
+<video id="player" controls></video>
+
+<script>
+async function buscar() {
+    const url = document.getElementById("inputUrl").value;
+    const result = document.getElementById("result");
+    const player = document.getElementById("player");
+    player.src = "";
+    result.innerHTML = "Buscando...";
+
+    // Proxy para saltar CORS
+    const proxy = "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
+
+    try {
+        const response = await fetch(proxy);
+        const text = await response.text();
+
+        // REGEX avanzado
+        const regex = /(https?:\/\/[^"'<> ]+\.(m3u8|mpd|ts|mp4|webm|mkv|flv|avi)[^"'<> ]*)/gi;
+
+        const encontrados = text.match(regex);
+
+        if (!encontrados || encontrados.length === 0) {
+            result.innerHTML = "No se encontró ningún stream.";
+            return;
+        }
+
+        // Mostrar resultados
+        result.innerHTML = "<h3>Streams encontrados:</h3>" + 
+                           encontrados.map(x => `<div>${x}</div>`).join("<br>");
+
+        // Reproducir el primero automáticamente
+        reproducir(encontrados[0]);
+
+    } catch (e) {
+        result.innerHTML = "Error al leer la página (puede ser bloqueo adicional del servidor).";
+    }
+}
+
+function reproducir(url) {
+    const video = document.getElementById("player");
+
+    // Si es M3U8 → usar HLS.js
+    if (url.includes(".m3u8")) {
+        if (Hls.isSupported()) {
+            const hls = new Hls();
+            hls.loadSource(url);
+            hls.attachMedia(video);
+        } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+            // iPhone / Safari
+            video.src = url;
+        }
+    } 
+
+    // Si es MP4 / WebM / TS / AVI / MKV → reproducir directo
+    else {
+        video.src = url;
+    }
+}
+</script>
+
+</body>
+</html>
