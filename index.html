@@ -1,177 +1,248 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buscador de Streams M3U8</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Extractor + Reproductor (m3u8/mp4)</title>
 
+<!-- HLS.js -->
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #f4f4f4;
-        padding: 20px;
-        text-align: center;
-    }
-    input {
-        width: 85%;
-        padding: 12px;
-        border-radius: 8px;
-        border: 1px solid #888;
-        font-size: 16px;
-    }
-    button {
-        padding: 12px 20px;
-        margin-top: 10px;
-        background: #2b4c7e;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-    button:hover {
-        background: #1f3656;
-    }
-
-    #resultados div {
-        background: white;
-        padding: 10px;
-        margin: 10px 0;
-        border-radius: 8px;
-        border-left: 5px solid #2b4c7e;
-        word-wrap: break-word;
-    }
-
-    video {
-        width: 90%;
-        max-width: 600px;
-        margin-top: 20px;
-        background: black;
-        border-radius: 10px;
-    }
-
-    /* Botón flotante cuando autoplay está bloqueado */
-    .play-btn {
-        padding: 12px 20px;
-        background: #2b4c7e;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        font-size: 18px;
-        cursor: pointer;
-        margin-top: 10px;
-    }
+  body { font-family: system-ui, -apple-system, Arial; padding: 18px; background:#f7f8fb; color:#102; }
+  input[type=text]{ width:76%; padding:10px; border-radius:6px; border:1px solid #bbb; }
+  button { padding:10px 14px; margin-left:8px; background:#2b4c7e; color:white; border:none; border-radius:6px; cursor:pointer; }
+  #log{ margin-top:14px; white-space:pre-wrap; font-size:13px; color:#223; }
+  #streams { margin-top:12px; }
+  #streams div{ background:#fff; padding:8px; margin:6px 0; border-radius:6px; border-left:4px solid #2b4c7e; word-break:break-word; }
+  #player { width:100%; max-width:900px; margin-top:18px; background:black; border-radius:10px; }
+  .playbtn { margin-top:8px; padding:8px 12px; background:#2b4c7e; color:#fff; border:0; border-radius:6px; cursor:pointer; }
+  .hint { font-size:13px; color:#606; margin-top:8px; }
 </style>
 </head>
-
 <body>
 
-<h2>🔍 Buscador de Streams M3U8</h2>
-<p>Ingresa una URL y detectará automáticamente cualquier <strong>.m3u8</strong> o video oculto.</p>
+<h2>Extractor de reproductor — intenta cargar el stream de la página</h2>
 
-<input type="text" id="urlInput" placeholder="Ingresa la URL de la página">
-<br>
-<button onclick="buscarStreams()">Buscar streams</button>
+<p>1) Ingresa la URL de la página que contiene el reproductor (la página donde normalmente das Play)</p>
+<input id="pageUrl" type="text" placeholder="https://ejemplo.com/pagina-con-player" />
+<button id="btnSearch">Buscar & Cargar</button>
 
-<h3>Resultados:</h3>
-<div id="resultados"></div>
+<div id="log"></div>
 
-<h3>Reproductor:</h3>
+<h3>Streams detectados:</h3>
+<div id="streams"></div>
+
+<h3>Reproductor</h3>
 <video id="player" controls></video>
+<div id="autoplayHint" class="hint"></div>
 
 <script>
+const logEl = document.getElementById('log');
+const streamsEl = document.getElementById('streams');
+const player = document.getElementById('player');
+const autoplayHint = document.getElementById('autoplayHint');
 
-// 🔎 Buscar streams en la página ingresada
-async function buscarStreams() {
-    const url = document.getElementById("urlInput").value.trim();
-    const caja = document.getElementById("resultados");
-    caja.innerHTML = "Buscando...";
+function log(...args){ logEl.innerText += args.join(' ') + '\n'; }
 
-    try {
-        const res = await fetch("https://corsproxy.io/?" + url);
-        const html = await res.text();
-
-        const encontrados = [];
-
-        // Buscar URLs .m3u8
-        const regex = /(https?:\/\/[^\s"'<>]+\.m3u8)/g;
-        let match;
-        while ((match = regex.exec(html)) !== null) {
-            encontrados.push(match[1]);
-        }
-
-        // Buscar MP4 / MKV / TS
-        const regexVideos = /(https?:\/\/[^\s"'<>]+\.(mp4|mkv|ts))/g;
-        while ((match = regexVideos.exec(html)) !== null) {
-            encontrados.push(match[0]);
-        }
-
-        // Mostrar resultados
-        if (encontrados.length === 0) {
-            caja.innerHTML = "❌ No se encontraron streams.";
-            return;
-        }
-
-        caja.innerHTML = "";
-        encontrados.forEach(url => {
-            let div = document.createElement("div");
-            div.innerHTML = `${url} <br><button onclick="reproducir('${url}')">▶ Reproducir</button>`;
-            caja.appendChild(div);
-        });
-
-    } catch (e) {
-        document.getElementById("resultados").innerHTML = "❌ Error al cargar la página.";
-    }
+function reset() {
+  logEl.innerText = '';
+  streamsEl.innerHTML = '';
+  player.src = '';
+  autoplayHint.innerText = '';
 }
 
-// 🎬 Reproducir automáticamente con fallback a botón
-async function reproducir(url) {
-    const video = document.getElementById("player");
-    video.src = "";
-    video.muted = true; // autoplay permitido en muchos navegadores
+document.getElementById('btnSearch').addEventListener('click', async () => {
+  reset();
+  const url = document.getElementById('pageUrl').value.trim();
+  if(!url){ log('Introduce una URL válida'); return; }
 
-    // Si es M3U8 → usar HLS.js
-    if (url.includes(".m3u8")) {
-        if (Hls.isSupported()) {
-            const hls = new Hls();
-            hls.loadSource(url);
-            hls.attachMedia(video);
-        } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-            video.src = url;
-        }
-    } else {
-        video.src = url;
+  log('Usando proxy CORS para cargar la página (si falla, la página bloquea CORS):');
+  log('https://corsproxy.io/?' + url);
+  log('');
+
+  try {
+    // fetch via CORS proxy
+    const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(url);
+    log('Fetching: ' + proxyUrl);
+    const res = await fetch(proxyUrl, {headers:{'Accept':'text/html'}});
+    if(!res.ok){ throw new Error('HTTP ' + res.status); }
+    const html = await res.text();
+    log('HTML recibido — tamaño: ' + html.length + ' bytes');
+
+    // attempt to extract obvious video sources
+    const found = extractCandidates(html, url);
+    if(found.length === 0){
+      log('No se encontraron URLs directas en el HTML. Intentando buscar en scripts más complejos...');
+      // run more heuristics
+      const found2 = extractAdvanced(html, url);
+      if(found2.length) found.push(...found2);
     }
 
-    // Intentar autoplay
-    try {
-        await video.play();
-        console.log("Autoplay OK");
-    } catch (e) {
-        console.log("Autoplay bloqueado");
-
-        mostrarBoton(video);
+    // remove duplicates
+    const unique = [...new Set(found)];
+    if(unique.length === 0){
+      log('No se pudo encontrar ninguna URL de stream en el HTML estático.');
+      log('POSIBLES CAUSAS:\n- La página genera la URL dinámicamente con JavaScript (XHR), por lo que necesitas un backend/headless (puppeteer) OR\n- La URL del stream está protegida y se genera tras interacción del usuario.\n\nOpciones:\n1) Abrir la página en una nueva pestaña y reproducir allí (si el site lo permite): window.open(url)\n2) Usar un servidor headless (puppeteer) para ejecutar la página y capturar las solicitudes de red.\n3) Si quieres, pega aquí la URL y yo intento detectar patrones concretos.');
+      return;
     }
+
+    log('Encontrado(s) ' + unique.length + ' candidato(s):');
+    unique.forEach(u=>{
+      const div = document.createElement('div');
+      div.innerHTML = `<div>${u}</div>`;
+      const btn = document.createElement('button');
+      btn.className='playbtn';
+      btn.innerText = '▶ Reproducir aquí';
+      btn.onclick = () => reproducir(u);
+      div.appendChild(btn);
+      streamsEl.appendChild(div);
+      log(' - ' + u);
+    });
+
+    // autoplay first
+    reproducir(unique[0]);
+
+  } catch(err){
+    log('Error al cargar la página: ' + err.message);
+    log('Intenta abrir la página directa en otra pestaña: window.open("' + url + '")');
+  }
+});
+
+// heuristics: simple regex searches in HTML
+function extractCandidates(html, baseUrl){
+  const results = [];
+  // common direct urls: .m3u8, .mp4, .ts, .webm, .mkv
+  const reFile = /(https?:\/\/[^"'<> \n\r]+?\.(m3u8|mp4|ts|webm|mkv|flv|avi)(?:\?[^"'<> ]*)?)/ig;
+  let m;
+  while((m = reFile.exec(html)) !== null){
+    results.push(m[1]);
+  }
+  // attributes like data-src="/stream/abc.m3u8" or src="/..."; resolve relative paths
+  const reAttr = /(?:src|data-src|data-hls|data-file|data-url)\s*=\s*["']([^"']+)["']/ig;
+  while((m = reAttr.exec(html)) !== null){
+    const candidate = resolveUrl(baseUrl, m[1]);
+    if(candidate) results.push(candidate);
+  }
+
+  // players config inside scripts JSON: look for "file": "..." or file: "..."
+  const reJsonFile = /["']file["']\s*:\s*["']([^"']+\.(m3u8|mp4)[^"']*)["']/ig;
+  while((m = reJsonFile.exec(html)) !== null){
+    results.push(resolveUrl(baseUrl, m[1]));
+  }
+
+  // jwplayer style: sources: [{file:"..."}]
+  const reJW = /file\s*:\s*["']([^"']+\.(m3u8|mp4)[^"']*)["']/ig;
+  while((m = reJW.exec(html)) !== null){
+    results.push(resolveUrl(baseUrl, m[1]));
+  }
+
+  return results.filter(Boolean);
 }
 
-// 👆 Mostrar botón de "Play" cuando autoplay es bloqueado
-function mostrarBoton(video) {
-    let btn = document.createElement("button");
-    btn.textContent = "▶ Iniciar reproducción";
-    btn.className = "play-btn";
+// advanced: look for base64 JSON blobs, URLs inside long JS objects, or keys like "hls","playlist"
+function extractAdvanced(html, baseUrl){
+  const results = [];
+  // find JSON-looking strings and search for .m3u8 inside them
+  const reScripts = /<script\b[^>]*>([\s\S]*?)<\/script>/ig;
+  let s;
+  while((s = reScripts.exec(html)) !== null){
+    const scriptText = s[1];
+    // search for any .m3u8 inside script text
+    const reAny = /(https?:\/\/[^"'<> \n\r]+?\.m3u8[^"'<> ]*)/ig;
+    let mm;
+    while((mm = reAny.exec(scriptText)) !== null){
+      results.push(mm[1]);
+    }
+    // search for quoted relative paths inside script vars
+    const reRel = /["']([^"']+?\.(m3u8|mp4|ts|webm|mkv|flv|avi)[^"']*)["']/ig;
+    while((mm = reRel.exec(scriptText)) !== null){
+      results.push(resolveUrl(baseUrl, mm[1]));
+    }
+    // look for base64-encoded JSON
+    const reBase64 = /"(?:[A-Za-z0-9+/]{40,}={0,2})"/g;
+    let b;
+    while((b = reBase64.exec(scriptText)) !== null){
+      try {
+        const decoded = atob(b[0].slice(1,-1));
+        const r2 = /(https?:\/\/[^"'<> \n\r]+?\.m3u8[^"'<> ]*)/ig;
+        let r;
+        while((r = r2.exec(decoded)) !== null) results.push(r[1]);
+      } catch(e){}
+    }
+  }
+  return results.filter(Boolean);
+}
 
-    btn.onclick = async () => {
-        video.muted = false;
-        await video.play();
-        btn.remove();
-    };
+// resolve relative URL using base
+function resolveUrl(base, maybeRelative){
+  try{
+    if(/^https?:\/\//i.test(maybeRelative)) return maybeRelative;
+    // handle protocol-relative
+    if(maybeRelative.startsWith('//')){
+      const proto = (new URL(base)).protocol;
+      return proto + maybeRelative;
+    }
+    const resolved = new URL(maybeRelative, base).toString();
+    return resolved;
+  } catch(e){
+    return null;
+  }
+}
 
-    video.insertAdjacentElement("afterend", btn);
+// reproducir con HLS.js si aplica y con autofallback de boton si autoplay bloquea
+async function reproducir(url){
+  autoplayHint.innerText = '';
+  player.pause();
+  // remove existing Hls instances if any (simple approach: reload video element)
+  player.src = '';
+  player.muted = true; // try muted autoplay
+
+  if(url.endsWith('.m3u8') || url.includes('.m3u8?') ){
+    if(Hls.isSupported()){
+      try {
+        const hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(player);
+      } catch(err){
+        log('HLS.js error: ' + err);
+      }
+    } else if(player.canPlayType('application/vnd.apple.mpegurl')){
+      player.src = url;
+    }
+  } else {
+    // mp4, ts, webm etc
+    player.src = url;
+  }
+
+  // try autoplay
+  try {
+    await player.play();
+    log('Reproduciendo automáticamente (muteado). Si quieres sonido, pulsa play y desactiva mute.');
+  } catch (e){
+    log('Autoplay bloqueado → mostrando botón para iniciar (reproduce con sonido al pulsar).');
+    showPlayOverlay(player);
+  }
+}
+
+// show play overlay/button below player
+function showPlayOverlay(videoEl){
+  // remove existing
+  const existing = document.getElementById('__play_overlay_btn');
+  if(existing) existing.remove();
+
+  const btn = document.createElement('button');
+  btn.id = '__play_overlay_btn';
+  btn.className = 'playbtn';
+  btn.textContent = '▶ Iniciar reproducción';
+  btn.onclick = async () => {
+    videoEl.muted = false;
+    try{ await videoEl.play(); }catch(e){ console.error(e); }
+    btn.remove();
+  };
+  videoEl.insertAdjacentElement('afterend', btn);
 }
 
 </script>
-
 </body>
 </html>
