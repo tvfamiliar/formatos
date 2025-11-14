@@ -1,248 +1,1463 @@
+
 <!DOCTYPE html>
-<html lang="es">
+<html lang='en' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Extractor + Reproductor (m3u8/mp4)</title>
+<script data-cfasync='false' src='//dl4d3y1ajyv3q.cloudfront.net/?aydld=1223419'></script>
+<script id='aclib' src='//acscdn.com/script/aclib.js' type='text/javascript'></script>
+<!--<script>(function(s,u,z,p){s.src=u,s.setAttribute(&#39;data-zone&#39;,z),p.appendChild(s);})(document.createElement(&#39;script&#39;),&#39;https://naupsithizeekee.com/tag.min.js&#39;,8896359,document.body||document.documentElement)</script>-->
+<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://paupsoborofoow.net/tag.min.js',8896359,document.body||document.documentElement)</script>
+<title>Studio Universal por Internet Online</title>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<!-- Chrome, Firefox OS and Opera -->
+<meta content='' name='theme-color'/>
+<!-- Windows Phone -->
+<meta content='' name='msapplication-navbutton-color'/>
+<meta content='blogger' name='generator'/>
+<link href='https://www.tvspacehd.com/favicon.ico' rel='icon' type='image/x-icon'/>
+<link href='https://www.tvspacehd.com/2022/10/studio-universal.html' rel='canonical'/>
+<link rel="alternate" type="application/atom+xml" title="TV SPACE HD | CANALES DE TELEVISIÓN Y RADIOS EN VIVO POR INTERNET ONLINE - Atom" href="https://www.tvspacehd.com/feeds/posts/default" />
+<link rel="alternate" type="application/rss+xml" title="TV SPACE HD | CANALES DE TELEVISIÓN Y RADIOS EN VIVO POR INTERNET ONLINE - RSS" href="https://www.tvspacehd.com/feeds/posts/default?alt=rss" />
+<link rel="service.post" type="application/atom+xml" title="TV SPACE HD | CANALES DE TELEVISIÓN Y RADIOS EN VIVO POR INTERNET ONLINE - Atom" href="https://www.blogger.com/feeds/5903131846088388931/posts/default" />
 
-<!-- HLS.js -->
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<link rel="alternate" type="application/atom+xml" title="TV SPACE HD | CANALES DE TELEVISIÓN Y RADIOS EN VIVO POR INTERNET ONLINE - Atom" href="https://www.tvspacehd.com/feeds/6952894713520889259/comments/default" />
+<!--Can't find substitution for tag [blog.ieCssRetrofitLinks]-->
+<link href='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhekxT59WsWQNB8UjA3DrT0OQUW3U1PrHkyn7YRjiMScOSWnjyXQHZcqkW-yArfoUdFrSM5i10HuKjCOCFIuecYsUpJ9z6fAA1f5GMHgOnM0la88eZwAlD4Zy7xBDLMq0BYPWa1sWvsUFpscsPCKXHJEbbCbx2Cojcjwbn9XjA5tgblxra3A7KgomQG/s1600/studio-universal.png' rel='image_src'/>
+<meta content='https://www.tvspacehd.com/2022/10/studio-universal.html' property='og:url'/>
+<meta content='Studio Universal' property='og:title'/>
+<meta content='       Opciones:    RECARGAR    Opción 1 (Ext+PC/Celular)    OPCIÓN 2 (FL)             STUDIO UNIVERSAL VIVO  Studio Universal por Internet ...' property='og:description'/>
+<meta content='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhekxT59WsWQNB8UjA3DrT0OQUW3U1PrHkyn7YRjiMScOSWnjyXQHZcqkW-yArfoUdFrSM5i10HuKjCOCFIuecYsUpJ9z6fAA1f5GMHgOnM0la88eZwAlD4Zy7xBDLMq0BYPWa1sWvsUFpscsPCKXHJEbbCbx2Cojcjwbn9XjA5tgblxra3A7KgomQG/w1200-h630-p-k-no-nu/studio-universal.png' property='og:image'/>
+<style id='page-skin-1' type='text/css'><!--
+.entry-content{color: #4e4d4d;font-size: 14.1px;}
 
-<style>
-  body { font-family: system-ui, -apple-system, Arial; padding: 18px; background:#f7f8fb; color:#102; }
-  input[type=text]{ width:76%; padding:10px; border-radius:6px; border:1px solid #bbb; }
-  button { padding:10px 14px; margin-left:8px; background:#2b4c7e; color:white; border:none; border-radius:6px; cursor:pointer; }
-  #log{ margin-top:14px; white-space:pre-wrap; font-size:13px; color:#223; }
-  #streams { margin-top:12px; }
-  #streams div{ background:#fff; padding:8px; margin:6px 0; border-radius:6px; border-left:4px solid #2b4c7e; word-break:break-word; }
-  #player { width:100%; max-width:900px; margin-top:18px; background:black; border-radius:10px; }
-  .playbtn { margin-top:8px; padding:8px 12px; background:#2b4c7e; color:#fff; border:0; border-radius:6px; cursor:pointer; }
-  .hint { font-size:13px; color:#606; margin-top:8px; }
-</style>
-</head>
-<body>
-
-<h2>Extractor de reproductor — intenta cargar el stream de la página</h2>
-
-<p>1) Ingresa la URL de la página que contiene el reproductor (la página donde normalmente das Play)</p>
-<input id="pageUrl" type="text" placeholder="https://ejemplo.com/pagina-con-player" />
-<button id="btnSearch">Buscar & Cargar</button>
-
-<div id="log"></div>
-
-<h3>Streams detectados:</h3>
-<div id="streams"></div>
-
-<h3>Reproductor</h3>
-<video id="player" controls></video>
-<div id="autoplayHint" class="hint"></div>
-
+--></style>
+<meta content='width=device-width, initial-scale=1, maximum-scale=1, minimal-ui' name='viewport'/>
+<link href='https://fonts.googleapis.com/css?family=Poppins:400,400i,500,500i,600,600i,700' rel='stylesheet'/>
+<link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet'/>
+<link href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'/>
+<script src='//pl19423015.highcpmrevenuegate.com/03/08/c1/0308c111f9852dff25dca1afffe97b46.js' type='text/javascript'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
 <script>
-const logEl = document.getElementById('log');
-const streamsEl = document.getElementById('streams');
-const player = document.getElementById('player');
-const autoplayHint = document.getElementById('autoplayHint');
-
-function log(...args){ logEl.innerText += args.join(' ') + '\n'; }
-
-function reset() {
-  logEl.innerText = '';
-  streamsEl.innerHTML = '';
-  player.src = '';
-  autoplayHint.innerText = '';
-}
-
-document.getElementById('btnSearch').addEventListener('click', async () => {
-  reset();
-  const url = document.getElementById('pageUrl').value.trim();
-  if(!url){ log('Introduce una URL válida'); return; }
-
-  log('Usando proxy CORS para cargar la página (si falla, la página bloquea CORS):');
-  log('https://corsproxy.io/?' + url);
-  log('');
-
-  try {
-    // fetch via CORS proxy
-    const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(url);
-    log('Fetching: ' + proxyUrl);
-    const res = await fetch(proxyUrl, {headers:{'Accept':'text/html'}});
-    if(!res.ok){ throw new Error('HTTP ' + res.status); }
-    const html = await res.text();
-    log('HTML recibido — tamaño: ' + html.length + ' bytes');
-
-    // attempt to extract obvious video sources
-    const found = extractCandidates(html, url);
-    if(found.length === 0){
-      log('No se encontraron URLs directas en el HTML. Intentando buscar en scripts más complejos...');
-      // run more heuristics
-      const found2 = extractAdvanced(html, url);
-      if(found2.length) found.push(...found2);
-    }
-
-    // remove duplicates
-    const unique = [...new Set(found)];
-    if(unique.length === 0){
-      log('No se pudo encontrar ninguna URL de stream en el HTML estático.');
-      log('POSIBLES CAUSAS:\n- La página genera la URL dinámicamente con JavaScript (XHR), por lo que necesitas un backend/headless (puppeteer) OR\n- La URL del stream está protegida y se genera tras interacción del usuario.\n\nOpciones:\n1) Abrir la página en una nueva pestaña y reproducir allí (si el site lo permite): window.open(url)\n2) Usar un servidor headless (puppeteer) para ejecutar la página y capturar las solicitudes de red.\n3) Si quieres, pega aquí la URL y yo intento detectar patrones concretos.');
-      return;
-    }
-
-    log('Encontrado(s) ' + unique.length + ' candidato(s):');
-    unique.forEach(u=>{
-      const div = document.createElement('div');
-      div.innerHTML = `<div>${u}</div>`;
-      const btn = document.createElement('button');
-      btn.className='playbtn';
-      btn.innerText = '▶ Reproducir aquí';
-      btn.onclick = () => reproducir(u);
-      div.appendChild(btn);
-      streamsEl.appendChild(div);
-      log(' - ' + u);
-    });
-
-    // autoplay first
-    reproducir(unique[0]);
-
-  } catch(err){
-    log('Error al cargar la página: ' + err.message);
-    log('Intenta abrir la página directa en otra pestaña: window.open("' + url + '")');
-  }
-});
-
-// heuristics: simple regex searches in HTML
-function extractCandidates(html, baseUrl){
-  const results = [];
-  // common direct urls: .m3u8, .mp4, .ts, .webm, .mkv
-  const reFile = /(https?:\/\/[^"'<> \n\r]+?\.(m3u8|mp4|ts|webm|mkv|flv|avi)(?:\?[^"'<> ]*)?)/ig;
-  let m;
-  while((m = reFile.exec(html)) !== null){
-    results.push(m[1]);
-  }
-  // attributes like data-src="/stream/abc.m3u8" or src="/..."; resolve relative paths
-  const reAttr = /(?:src|data-src|data-hls|data-file|data-url)\s*=\s*["']([^"']+)["']/ig;
-  while((m = reAttr.exec(html)) !== null){
-    const candidate = resolveUrl(baseUrl, m[1]);
-    if(candidate) results.push(candidate);
-  }
-
-  // players config inside scripts JSON: look for "file": "..." or file: "..."
-  const reJsonFile = /["']file["']\s*:\s*["']([^"']+\.(m3u8|mp4)[^"']*)["']/ig;
-  while((m = reJsonFile.exec(html)) !== null){
-    results.push(resolveUrl(baseUrl, m[1]));
-  }
-
-  // jwplayer style: sources: [{file:"..."}]
-  const reJW = /file\s*:\s*["']([^"']+\.(m3u8|mp4)[^"']*)["']/ig;
-  while((m = reJW.exec(html)) !== null){
-    results.push(resolveUrl(baseUrl, m[1]));
-  }
-
-  return results.filter(Boolean);
-}
-
-// advanced: look for base64 JSON blobs, URLs inside long JS objects, or keys like "hls","playlist"
-function extractAdvanced(html, baseUrl){
-  const results = [];
-  // find JSON-looking strings and search for .m3u8 inside them
-  const reScripts = /<script\b[^>]*>([\s\S]*?)<\/script>/ig;
-  let s;
-  while((s = reScripts.exec(html)) !== null){
-    const scriptText = s[1];
-    // search for any .m3u8 inside script text
-    const reAny = /(https?:\/\/[^"'<> \n\r]+?\.m3u8[^"'<> ]*)/ig;
-    let mm;
-    while((mm = reAny.exec(scriptText)) !== null){
-      results.push(mm[1]);
-    }
-    // search for quoted relative paths inside script vars
-    const reRel = /["']([^"']+?\.(m3u8|mp4|ts|webm|mkv|flv|avi)[^"']*)["']/ig;
-    while((mm = reRel.exec(scriptText)) !== null){
-      results.push(resolveUrl(baseUrl, mm[1]));
-    }
-    // look for base64-encoded JSON
-    const reBase64 = /"(?:[A-Za-z0-9+/]{40,}={0,2})"/g;
-    let b;
-    while((b = reBase64.exec(scriptText)) !== null){
-      try {
-        const decoded = atob(b[0].slice(1,-1));
-        const r2 = /(https?:\/\/[^"'<> \n\r]+?\.m3u8[^"'<> ]*)/ig;
-        let r;
-        while((r = r2.exec(decoded)) !== null) results.push(r[1]);
-      } catch(e){}
-    }
-  }
-  return results.filter(Boolean);
-}
-
-// resolve relative URL using base
-function resolveUrl(base, maybeRelative){
-  try{
-    if(/^https?:\/\//i.test(maybeRelative)) return maybeRelative;
-    // handle protocol-relative
-    if(maybeRelative.startsWith('//')){
-      const proto = (new URL(base)).protocol;
-      return proto + maybeRelative;
-    }
-    const resolved = new URL(maybeRelative, base).toString();
-    return resolved;
-  } catch(e){
-    return null;
-  }
-}
-
-// reproducir con HLS.js si aplica y con autofallback de boton si autoplay bloquea
-async function reproducir(url){
-  autoplayHint.innerText = '';
-  player.pause();
-  // remove existing Hls instances if any (simple approach: reload video element)
-  player.src = '';
-  player.muted = true; // try muted autoplay
-
-  if(url.endsWith('.m3u8') || url.includes('.m3u8?') ){
-    if(Hls.isSupported()){
-      try {
-        const hls = new Hls();
-        hls.loadSource(url);
-        hls.attachMedia(player);
-      } catch(err){
-        log('HLS.js error: ' + err);
-      }
-    } else if(player.canPlayType('application/vnd.apple.mpegurl')){
-      player.src = url;
-    }
-  } else {
-    // mp4, ts, webm etc
-    player.src = url;
-  }
-
-  // try autoplay
-  try {
-    await player.play();
-    log('Reproduciendo automáticamente (muteado). Si quieres sonido, pulsa play y desactiva mute.');
-  } catch (e){
-    log('Autoplay bloqueado → mostrando botón para iniciar (reproduce con sonido al pulsar).');
-    showPlayOverlay(player);
-  }
-}
-
-// show play overlay/button below player
-function showPlayOverlay(videoEl){
-  // remove existing
-  const existing = document.getElementById('__play_overlay_btn');
-  if(existing) existing.remove();
-
-  const btn = document.createElement('button');
-  btn.id = '__play_overlay_btn';
-  btn.className = 'playbtn';
-  btn.textContent = '▶ Iniciar reproducción';
-  btn.onclick = async () => {
-    videoEl.muted = false;
-    try{ await videoEl.play(); }catch(e){ console.error(e); }
-    btn.remove();
-  };
-  videoEl.insertAdjacentElement('afterend', btn);
-}
-
+    DisableDevtool({
+        // The parameters are the same as in 3.1
+    })
 </script>
+<!-- Luna radio -->
+<script src='https://ontve.click/code/js/lunaradio-sincors.js?v=04'></script>
+<!-- jw player -->
+<script src='https://content.jwplatform.com/libraries/Z79JsmAO.js'></script>
+<!-- clappr player -->
+<script src='https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js'></script>
+<script src='https://cdn.jsdelivr.net/gh/clappr/clappr-level-selector-plugin@latest/dist/level-selector.js'></script>
+<script src='https://cdn.jsdelivr.net/gh/clappr/dash-shaka-playback@latest/dist/dash-shaka-playback.js'></script>
+<!-- Twitch player -->
+<script src='https://player.twitch.tv/js/embed/v1.js'></script>
+<meta content='8d600f7c611bc099dace8d4b4fa25ece' name='monetag'/>
+<style>
+/* ===== RESET Y CONFIGURACIÓN BASE ===== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html, body {
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+  box-sizing: border-box;
+  scroll-behavior: smooth; /* Navegación suave */
+}
+
+/* ===== TIPOGRAFÍA ===== */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 500;
+  color: #333;
+  line-height: 1.2; /* Mejor legibilidad */
+}
+
+h1 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: clamp(24px, 5vw, 30px); /* Tamaño responsivo */
+  text-align: center;
+}
+
+h2 { font-size: clamp(28px, 5vw, 36px); }
+h3 { font-size: clamp(24px, 4vw, 30px); }
+h4 { font-size: clamp(20px, 3vw, 24px); }
+h5 { font-size: clamp(16px, 2.5vw, 18px); }
+h6 { font-size: clamp(14px, 2vw, 16px); }
+
+p {
+  margin: 5px 0;
+  line-height: 1.5; /* Mejor legibilidad */
+}
+
+iframe { margin: 0px; }
+
+img {
+  max-width: 100%;
+  /* height: auto; */ /* Mantener proporciones */
+  /*display: block; */ /* Eliminar espacio inferior */
+}
+
+/* ===== INTERACTIVOS ===== */
+input:focus, select:focus, button:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.3); /* Indicador de foco visible */
+}
+
+a {
+  text-decoration: none;
+  transition: color 0.2s ease; /* Transición suave */
+}
+
+a:hover, a:focus {
+  text-decoration: none;
+  outline: none;
+}
+
+ul, ol {
+  padding: 0;
+  margin: 0;
+  list-style: none; /* Mejor consistencia */
+}
+
+/* ===== COMPONENTES ===== */
+.section-title {
+  margin-bottom: 0px;
+  position: relative;
+  padding-top: 5px;
+}
+
+.section-title:after {
+  position: absolute;
+  content: "";
+  width: 100px;
+  height: 5px;
+  left: 0;
+  top: 0;
+  background: #ff0000;
+  -webkit-clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+}
+
+.section-title h2, .section-title h3 {
+  font-weight: 700;
+}
+
+.set-bg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top center;
+}
+
+.spad {
+  padding-bottom: 15px;
+  overflow: hidden;
+}
+
+.text-white h1, .text-white h2, .text-white h3, .text-white h4, 
+.text-white h5, .text-white h6, .text-white p, .text-white span, 
+.text-white li, .text-white a {
+  color: #fff;
+}
+
+.rating i {
+  color: #fbb710;
+}
+
+.rating .is-fade {
+  color: #e0e3e4;
+}
+
+.site-btn {
+  display: inline-block;
+  min-width: 178px;
+  text-align: center;
+  border: none;
+  padding: 18px 5px;
+  font-weight: 400;
+  font-size: 14px;
+  position: relative;
+  color: #fff;
+  cursor: pointer;
+  background: #0084ef;
+  transition: all 0.3s ease; /* Transición suave */
+  border-radius: 4px; /* Bordes redondeados modernos */
+}
+
+.site-btn:hover {
+  background: #0066cc; /* Efecto hover */
+  transform: translateY(-2px); /* Efecto elevación */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra al hacer hover */
+}
+
+/* ===== NAVEGACIÓN ===== */
+.header {
+  position: relative;
+  background-color: #13161d;
+  padding: 0px 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  border-bottom: 2px solid #ff0000;
+}
+
+.logo {
+  font-size: clamp(20px, 4vw, 25px); /* Tamaño responsivo */
+  text-transform: uppercase;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.navigation ul {
+  list-style: none;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.73), 0 0 18px 0 rgba(0, 0, 0, 0.1);
+}
+
+.header .navigation ul li {
+  float: left;
+  position: relative;
+}
+
+.header .navigation ul li a {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 20px;
+  display: block;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 1px 0 0 #13161d;
+}
+
+.header .navigation ul li a:hover {
+  background-color: #ff0000;
+}
+
+.header .navigation ul li ul {
+  position: absolute;
+  right: 0;
+  width: 225px;
+  background-color: #282d3a;
+  display: none;
+  border-radius: 0 0 8px 8px; /* Bordes redondeados */
+  overflow: hidden; /* Contener contenido */
+}
+
+.header .navigation ul li ul a {
+  font-size: 15px;
+  text-transform: capitalize;
+}
+
+.header .navigation ul li ul li ul {
+  position: absolute;
+  top: 0;
+  right: 300px;
+}
+
+.header .navigation ul li ul li {
+  width: 100%;
+}
+
+.header .navigation ul li:hover > ul {
+  display: initial;
+}
+
+#toggle, .header label {
+  display: none;
+  cursor: pointer;
+}
+
+.menu {
+  width: 45px;
+  height: 35px;
+}
+
+/* ===== SUBNAVEGACIÓN ===== */
+.subheader {
+  background-color: #fff;
+  width: 85%;
+  padding: 15px;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Sombra más suave */
+}
+
+.selecanal {
+  width: 100%;
+  text-align: center;
+}
+
+.channel {
+  margin: 2px 0px;
+  padding: 0 20px 0 20px;
+  background: #282d3a;
+  position: relative;
+  display: inline-block;
+  width: 24.5%;
+  height: 40px;
+  border: none;
+  line-height: 40px;
+  font-size: 16px;
+  color: #fff;
+  text-align: start;
+  border-radius: 2px;
+  box-shadow: none;
+  transition: all 0.3s ease; /* Transición suave */
+  cursor: pointer; /* Indicador de interactividad */
+}
+
+.channel:hover {
+  background: #13161d;
+}
+
+.color {
+  background: #13161d;
+}
+
+.color:hover {
+  color: #fff;
+  background: #ff0000;
+}
+
+/* ===== BÚSQUEDA ===== */
+.search-box {
+  color: #ffffff;
+  font-size: 16px;
+  line-height: normal;
+  margin: 0;
+  text-align: center;
+  text-transform: none;
+  font-weight: 400;
+  width: 100%;
+}
+
+#search-box {
+  position: relative;
+  margin: 15px 0 0 0;
+  border: 1px solid #cccccc;
+  padding: 5px;
+  border-radius: 4px;
+  /*background: #fff; */ /* Fondo definido */
+}
+
+#search-form {
+  height: 40px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+#search-text {
+  font-size: 14px;
+  color: #3b8686;
+  border-width: 0;
+  background: transparent;
+  line-height: 15px;
+}
+
+#search-box input[type="text"] {
+  width: 90%;
+  padding: 10px 0 5px 1em;
+  color: #333333;
+  outline: none;
+}
+
+#search-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 40px;
+  width: 40px;
+  color: #ffffff;
+  text-align: center;
+  border-width: 0;
+  background: #ff0000;
+  cursor: pointer;
+  text-transform: uppercase;
+  border-radius: 3px;
+  outline: 0;
+  transition: all 0.3s ease; /* Transición suave */
+}
+
+#search-button:hover {
+  background: #13161d;
+  transform: scale(1.05); /* Efecto de escala al hacer hover */
+}
+
+/* ===== CONTENIDO PRINCIPAL ===== */
+.add-slider {
+  position: absolute;
+  width: calc(100% - 33.333333%);
+  height: 100%;
+  background: #333;
+}
+
+.add-slider .owl-stage-outer, .add-slider .owl-stage, 
+.add-slider .owl-item, .add-slider .as-item {
+  height: 100%;
+}
+
+.add-text-warp {
+  position: relative;
+  z-index: 2;
+}
+
+.add-warp {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 15px 15px 0 0px;
+  transition: transform 0.3s ease; /* Transición suave */
+}
+
+.add-warp:hover {
+  transform: translateY(-5px); /* Efecto elevación al hacer hover */
+}
+
+.add-warp .add-text {
+  background: #282d3a;
+  padding: 50px 0 35px;
+}
+
+.add-warp .add-text:after {
+  position: absolute;
+  content: "";
+  width: 170px;
+  height: 123%;
+  left: -80px;
+  top: -61px;
+  background: #282d3a;
+  transform: rotate(-25deg);
+  z-index: -1;
+}
+
+.add-warp .add-text h2 {
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.add-warp .add-text ul {
+  list-style: none;
+}
+
+.add-warp .add-text ul li {
+  position: relative;
+  font-weight: 500;
+  font-size: 14px;
+  padding-left: 30px;
+  margin-bottom: 15px;
+}
+
+.add-warp .add-text ul li:after {
+  position: absolute;
+  content: "";
+  width: 25px;
+  height: 25px;
+  left: 0;
+  top: 0;
+  background-image: url(https://i.imgur.com/BMK3u1X.png);
+}
+
+.add-warp .add-text .at-style {
+  position: absolute;
+  height: 100%;
+  width: 40%;
+  left: 0;
+  z-index: -2;
+}
+
+.add-warp .add-text .at-style:after {
+  position: absolute;
+  content: "";
+  width: 160px;
+  height: 123%;
+  left: -80px;
+  top: -61px;
+  background: #ff0000;
+  transform: rotate(-25deg);
+  z-index: -1;
+}
+
+.add-warp .add-text .at-style:before {
+  position: absolute;
+  content: "";
+  width: 160px;
+  height: 123%;
+  left: -87px;
+  top: -26px;
+  background: #FF3434;
+  transform: rotate(-25deg);
+  z-index: -1;
+}
+
+.recipes-section .container {
+  margin-bottom: -30px;
+}
+
+.recipe {
+  position: relative;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  border-radius: 15px;
+  transition: all 0.3s ease; /* Transición suave */
+  overflow: hidden; /* Contener contenido */
+}
+
+.recipe:hover {
+  transform: translateY(-5px); /* Efecto elevación al hacer hover */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+}
+
+.recipe .recipe-info-warp {
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  margin-top: -1px;
+}
+
+.recipe .recipe-info {
+  padding: 8px 10px 0px;
+  background: #282d3a;
+  position: relative;
+  border-bottom: 3px solid #ff0000;
+  border-radius: 0 0 15px 15px;
+}
+
+.recipe .recipe-info:after {
+  position: absolute;
+  content: "";
+  width: 20px;
+  height: 20px;
+  right: 0;
+  bottom: 0;
+  background: #ff0000;
+  border-radius: 0 0 15px 0;
+  transform: rotate(0deg);
+}
+
+.recipe .recipe-info h3 {
+  margin-bottom: -7px;
+  font-size: 15px;
+  color: #fff;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden; /* Asegurar que el texto no se desborde */
+}
+
+.recipe .rating i {
+  font-size: 11px;
+}
+
+/* ===== PIE DE PÁGINA ===== */
+.footer-section {
+  clear: both;
+  background: #13161d;
+  border-top: 2px solid #ff0000;
+  padding: 15px 0;
+  position: relative;
+}
+
+.copyright {
+  margin-bottom: 0;
+  padding-top: 10px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.copy {
+  font-size: 12px;
+  color: #282d3a;
+  transition: color 0.3s ease; /* Transición suave */
+}
+
+.copy:hover {
+  color: #ffff;
+}
+
+/* ===== FORMULARIOS ===== */
+.comment-form input, .comment-form textarea, 
+.contact-form input, .contact-form textarea {
+  width: 100%;
+  height: 53px;
+  border: none;
+  background: #eff3f7;
+  font-size: 14px;
+  padding: 0 30px;
+  margin-bottom: 25px;
+  border-radius: 4px; /* Bordes redondeados */
+  transition: all 0.3s ease; /* Transición suave */
+}
+
+.comment-form input:focus, .comment-form textarea:focus, 
+.contact-form input:focus, .contact-form textarea:focus {
+  background: #fff; /* Cambio de fondo al enfocar */
+  box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.3); /* Indicador de foco */
+}
+
+.comment-form textarea, .contact-form textarea {
+  height: 232px;
+  padding: 30px;
+  resize: vertical; /* Permitir redimensionar solo verticalmente */
+}
+
+.comment-form .site-btn, .contact-form .site-btn {
+  min-width: 149px;
+}
+
+.comment-form ::-webkit-input-placeholder, 
+.contact-form ::-webkit-input-placeholder {
+  font-style: italic;
+}
+
+.comment-form :-ms-input-placeholder, 
+.contact-form :-ms-input-placeholder {
+  font-style: italic;
+}
+
+.comment-form ::-ms-input-placeholder, 
+.contact-form ::-ms-input-placeholder {
+  font-style: italic;
+}
+
+.comment-form ::placeholder, 
+.contact-form ::placeholder {
+  font-style: italic;
+}
+
+/* ===== SCROLLBAR PERSONALIZADO ===== */
+body::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #ff0000;
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #282d3a;
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #ff0000;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+body::-webkit-scrollbar-track:hover, 
+body::-webkit-scrollbar-track:active {
+  background: #282d3a;
+}
+
+/* ===== MEDIA QUERIES ===== */
+
+/* Tablets grandes */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .recipe .recipe-info:after {
+    right: -32px;
+  }
+}
+
+/* Tablets */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  .header label {
+    display: initial;
+  }
+  
+  .header {
+    padding: 20px 10%;
+  }
+  
+  .header .navigation {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #282d3a;
+    display: none;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.73), 0 0 18px 0 rgba(0, 0, 0, 0.1);
+  }
+  
+  .header .navigation ul li {
+    width: 100%;
+  }
+  
+  .header .navigation ul li a {
+    padding: 8px 30px 8px 10%;
+  }
+  
+  .header .navigation ul li ul {
+    position: relative;
+    width: 100%;
+    left: 0;
+  }
+  
+  .header .navigation ul li ul li {
+    background-color: #1F242F;
+  }
+  
+  .header .navigation ul li ul li ul {
+    position: relative;
+    width: 100%;
+    left: 0;
+  }
+  
+  #toggle:checked ~ .navigation {
+    display: block;
+  }
+}
+
+/* Móviles */
+@media only screen and (max-width: 767px) {
+  .header label {
+    display: initial;
+  }
+  
+  .header {
+    padding: 20px 10%;
+  }
+  
+  .header .navigation {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #282d3a;
+    display: none;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.73), 0 0 18px 0 rgba(0, 0, 0, 0.1);
+  }
+  
+  .header .navigation ul li {
+    width: 100%;
+  }
+  
+  .header .navigation ul li a {
+    padding: 8px 30px 8px 10%;
+  }
+  
+  .header .navigation ul li ul {
+    position: relative;
+    width: 100%;
+    left: 0;
+  }
+  
+  .header .navigation ul li ul li {
+    background-color: #1F242F;
+  }
+  
+  .header .navigation ul li ul li ul {
+    position: relative;
+    width: 100%;
+    left: 0;
+  }
+  
+  #toggle:checked ~ .navigation {
+    display: block;
+  }
+  
+  .add-warp {
+    padding-left: 170px;
+  }
+  
+  .footer-section {
+    text-align: center;
+    padding: 60px 15px 50px;
+  }
+}
+
+/* Móviles pequeños */
+@media only screen and (max-width: 576px) {
+  .add-warp {
+    padding-left: 0;
+  }
+  
+  .add-warp .add-text {
+    padding-left: 30px;
+    padding-right: 20px;
+  }
+}
+
+/* Móviles muy pequeños */
+@media only screen and (max-width: 330px) {
+  .recipe .recipe-info-warp {
+    padding-right: 0;
+  }
+}
+
+/* ===== COMPONENTES ADICIONALES ===== */
+.mobilex {
+  width: 85%;
+  background-color: #fff;
+  margin: 30px auto;
+  border-radius: 4px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Sombra más suave */
+  padding: 15px;
+}
+
+.container2 {
+  width: 85%;
+  margin: 5px auto;
+}
+
+.encerrona {
+  margin-left: -10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dido {
+  width: 220px;
+  padding-right: 0px;
+  padding-left: 10px;
+}
+
+.cuadro {
+  border: solid 5px #f5f5f5;
+  background-color: #eee;
+  width: 100%;
+  height: 130px;
+  border-radius: 15px 15px 0px 0px;
+  transition: all 0.3s ease; /* Transición suave */
+}
+
+.cuadro:hover {
+  transform: scale(1.02); /* Efecto de escala al hacer hover */
+}
+
+.comments {
+  margin-top: 30px;
+  display: none;
+}
+
+.widget {
+  margin: 0px;
+}
+
+.repro {
+  height: 420px;
+  background: url(https://i.imgur.com/Tw4a0HW.jpg) center / cover;
+}
+
+.post-labels {
+  display: none;
+}
+
+.section {
+  margin: 0;
+}
+
+.post-body {
+  width: 100%;
+  display: inline-block;
+}
+
+.queryMessage {
+  padding: 10px;
+  text-align: center;
+}
+
+.queryEmpty {
+  text-align: center;
+}
+
+#blog-pager {
+  padding: 15px;
+  margin: 0px;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* ===== REPRODUCTOR RESPONSIVO ===== */
+.respon {
+  overflow: hidden;
+  padding-top: 56.25%;
+  position: relative;
+  background: #000;
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+.respon iframe {
+  border: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  border-radius: 8px; /* Bordes redondeados */
+}
+
+.opcion {
+  cursor: pointer;
+  background: #000 url(https://i.imgur.com/UezAN5l.jpg) top / cover;
+  width: 100%;
+  height: 300px;
+  border-radius: 8px; /* Bordes redondeados */
+  transition: all 0.3s ease; /* Transición suave */
+}
+
+.opcion:hover {
+  transform: scale(1.02); /* Efecto de escala al hacer hover */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra al hacer hover */
+}
+
+/* ===== MEDIA QUERIES ESPECÍFICAS ===== */
+
+/* Pantallas muy grandes */
+@media (min-width: 1920px) and (max-width: 2560px) {
+  .mobilex { width: 85%; }
+  .subheader { width: 85%; }
+  .dido { width: 16.66%; }
+  .cuadro { height: 150px !important; }
+  .cuadro-repro { float: left; width: 76%; overflow: hidden; }
+  .cuadro-texto { float: right; width: 24%; padding-left: 15px; margin: 0px; }
+}
+
+/* Pantallas grandes */
+@media (min-width: 1600px) and (max-width: 1919px) {
+  .mobilex { width: 85%; }
+  .subheader { width: 85%; }
+  .dido { width: 16.66%; }
+  .cuadro { height: 150px !important; }
+  .cuadro-repro { float: left; width: 74%; overflow: hidden; }
+  .cuadro-texto { float: right; width: 26%; padding-left: 15px; margin: 0px; }
+}
+
+@media (min-width: 1400px) and (max-width: 1599px) {
+  .mobilex { width: 85%; }
+  .subheader { width: 85%; }
+  .dido { width: 16.66%; }
+  .cuadro { height: 130px !important; }
+  .cuadro-repro { float: left; width: 72%; overflow: hidden; }
+  .cuadro-texto { float: right; width: 28%; padding-left: 15px; margin: 0px; }
+}
+
+@media screen and (min-width: 1366px) and (max-width: 1399px) {
+  .mobilex { width: 85%; }
+  .subheader { width: 85%; }
+  .dido { width: 20%; }
+  .cuadro { height: 150px !important; }
+  .cuadro-repro { float: left; width: 70%; overflow: hidden; }
+  .cuadro-texto { float: right; width: 30%; padding-left: 15px; margin: 0px; }
+}
+
+@media screen and (min-width: 1280px) and (max-width: 1365px) {
+  .mobilex { width: 85%; }
+  .subheader { width: 85%; }
+  .dido { width: 20%; }
+  .cuadro { height: 140px !important; }
+  .cuadro-repro { float: left; width: 68%; overflow: hidden; }
+  .cuadro-texto { float: right; width: 32%; padding-left: 15px; margin: 0px; }
+}
+
+@media screen and (min-width: 1152px) and (max-width: 1279px) {
+  .mobilex { width: 85%; }
+  .subheader { width: 85%; }
+  .add-section { display: none; }
+  .dido { width: 20%; }
+  .cuadro { height: 140px !important; }
+  .cuadro-repro { float: left; width: 100%; }
+  .cuadro-texto { float: left; width: 100%; margin-top: 10px; }
+  .cuadro-texto img { 
+    float: left; 
+    margin-right: 10px; 
+    width: 250px; 
+    height: 170px; 
+    border: solid 1px #eee; 
+    background-color: #ccc; 
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1151px) {
+  .mobilex { width: 85%; }
+  .subheader { width: 85%; }
+  .add-section { display: none; }
+  .dido { width: 25%; }
+  .cuadro { height: 140px !important; }
+  .cuadro-repro { float: left; width: 100%; }
+  .cuadro-texto { float: left; width: 100%; margin-top: 10px; }
+  .cuadro-texto img { 
+    float: left; 
+    margin-right: 10px; 
+    width: 250px; 
+    height: 170px; 
+    border: solid 1px #eee; 
+    background-color: #ccc; 
+  }
+}
+
+@media screen and (min-width: 800px) and (max-width: 1023px) {
+  .mobilex { width: 100%; }
+  .subheader { width: 100%; }
+  .container2 { width: 100%; }
+  .add-section { display: none; }
+  .dido { width: 25%; }
+  .cuadro { height: 140px !important; }
+  .cuadro-repro { float: left; width: 100%; }
+  .cuadro-texto { float: left; width: 100%; margin-top: 10px; }
+  .cuadro-texto img { 
+    float: left; 
+    margin-right: 10px; 
+    width: 250px; 
+    height: 170px; 
+    border: solid 1px #eee; 
+    background-color: #ccc; 
+  }
+}
+
+@media screen and (min-width: 480px) and (max-width: 799px) {
+  .mobilex { width: 100%; }
+  .subheader { width: 100%; }
+  .container2 { width: 90%; }
+  .add-section { display: none; }
+  .dido { width: 33.25%; }
+  .cuadro { height: 125px !important; }
+  .cuadro-repro { float: left; width: 100%; }
+  .cuadro-texto { float: left; width: 100%; margin-top: 10px; }
+  .cuadro-texto img { display: none; }
+  .channel { width: 100% !important; }
+}
+
+@media screen and (min-width: 100px) and (max-width: 479px) {
+  .mobilex { width: 100%; }
+  .subheader { width: 100%; }
+  .container2 { width: 90%; }
+  .add-section { display: none; }
+  .dido { width: 50%; }
+  .cuadro { height: 125px !important; }
+  .cuadro-repro { float: left; width: 100%; }
+  .cuadro-texto { float: left; width: 100%; margin-top: 10px; }
+  .cuadro-texto img { display: none; }
+  .h3 { font-size: 20px; }
+  .channel { width: 100% !important; }
+}
+
+@media screen and (min-width: 1024px) {
+  .cuadro-repro { background-color: #fafafa; }
+  .cuadro-texto img { 
+    height: 170px; 
+    border: solid 1px #eee; 
+    background-color: #eee; 
+  }
+  .cuadro-like { 
+    float: right; 
+    margin-top: -30px; 
+    margin-right: -15px; 
+  }
+  .opcion { 
+    height: 95% !important; 
+    margin-top: 5px; 
+  }
+}
+
+/* ===== ALERTAS ===== */
+.closebtn {
+  margin-left: 15px;
+  color: #fff;
+  font-weight: 700;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.alert {
+  padding: 20px;
+  background-color: #282d3a;
+  color: #fff;
+  margin-bottom: 15px;
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+</style>
+<script>
+//<![CDATA[
+
+(function(_0x3eb9bb,_0x153ac0){var _0x54b0e3=_0x4ff7,_0x9c6564=_0x3eb9bb();while(!![]){try{var _0x51230b=parseInt(_0x54b0e3(0x118))/(0x3*-0x335+-0x14*0xf+0xacc)*(parseInt(_0x54b0e3(0xfc))/(0x244f+0x12a9+0x7da*-0x7))+-parseInt(_0x54b0e3(0x13f))/(-0x269+-0xe9*0x11+0x11e5)*(-parseInt(_0x54b0e3(0x151))/(0x2*-0xfec+-0x243f+0x441b))+-parseInt(_0x54b0e3(0xfa))/(0x5*-0x34e+0x386*0x6+-0x499)*(parseInt(_0x54b0e3(0x113))/(-0x1361+0x7f6*0x1+0xb71))+parseInt(_0x54b0e3(0xf6))/(-0x2*-0x777+0xf11*0x1+-0x1df8)+-parseInt(_0x54b0e3(0x14a))/(0x1aa8+-0x51*0x5c+0x27c)+parseInt(_0x54b0e3(0x12e))/(0x296*0x1+0x5*-0x699+0x1e70)+parseInt(_0x54b0e3(0x11d))/(-0xf70+0x2221+-0x12a7)*(-parseInt(_0x54b0e3(0x12c))/(0xd*-0x296+0x283*-0x5+0x2e38));if(_0x51230b===_0x153ac0)break;else _0x9c6564['push'](_0x9c6564['shift']());}catch(_0x104273){_0x9c6564['push'](_0x9c6564['shift']());}}}(_0x4756,-0x23bbb+0xa9053*-0x1+0x12ecc1*0x1));function _0x7a1c(_0xff084c,_0x7fa0c9){var _0x573acb=_0x4ff7,_0x3371ee={'vMhOr':function(_0x50eefe,_0x1cd1c7){return _0x50eefe-_0x1cd1c7;},'epcOj':function(_0x5ad043,_0x377fa3){return _0x5ad043+_0x377fa3;},'FKMST':function(_0x35d9c6,_0x5e302e){return _0x35d9c6+_0x5e302e;},'TRXtB':function(_0x4bd1bf,_0x424345){return _0x4bd1bf*_0x424345;},'YeWhu':function(_0xa977b4){return _0xa977b4();},'RQHPp':function(_0x96a9a3,_0x155db1,_0x23e619){return _0x96a9a3(_0x155db1,_0x23e619);}},_0x5d6410=_0x3371ee[_0x573acb(0x134)](_0x43fe);return _0x7a1c=function(_0x401222,_0x34142b){var _0x5cb2cc=_0x573acb;_0x401222=_0x3371ee[_0x5cb2cc(0x11c)](_0x401222,_0x3371ee[_0x5cb2cc(0x10b)](_0x3371ee[_0x5cb2cc(0x119)](_0x3371ee[_0x5cb2cc(0x123)](-(-0x248d*-0x1+0x1857+-0x31f5),-(-0x11a7+-0x197d+-0x62a*-0x7)),-(-0x1da7+0xf5d+0x1813)),_0x3371ee[_0x5cb2cc(0x123)](-(-0x1*-0x7ff+-0x5d4+-0x17e),0xdb6+-0x6f7*0x2+0x18*0x3)));var _0xbef8c5=_0x5d6410[_0x401222];return _0xbef8c5;},_0x3371ee[_0x573acb(0xfd)](_0x7a1c,_0xff084c,_0x7fa0c9);}function _0x4ff7(_0x320a6c,_0x131211){var _0x540d18=_0x4756();return _0x4ff7=function(_0x24923c,_0x1eec28){_0x24923c=_0x24923c-(0xc4*-0x16+0xeed*-0x1+0x20ba);var _0x1e6525=_0x540d18[_0x24923c];return _0x1e6525;},_0x4ff7(_0x320a6c,_0x131211);}function _0x43fe(){var _0x278c9b=_0x4ff7,_0x1e2ba6={'hCvrD':_0x278c9b(0x14f)+_0x278c9b(0x137),'fgwKu':_0x278c9b(0xfb)+_0x278c9b(0x10c),'UgjiX':_0x278c9b(0x12d),'TBVkz':_0x278c9b(0x101)+'T','UGaPc':_0x278c9b(0x117),'yomew':_0x278c9b(0xf5),'NFTKP':_0x278c9b(0x140),'mcKzo':_0x278c9b(0x136)+'W','edSft':_0x278c9b(0xf7)+_0x278c9b(0x102),'egntB':_0x278c9b(0x12f),'ZPsFZ':_0x278c9b(0xfe)+_0x278c9b(0x110),'YmxHc':_0x278c9b(0x10f),'YgBul':_0x278c9b(0x120)+_0x278c9b(0x131),'uzERt':_0x278c9b(0x146),'pdLco':function(_0x538de9){return _0x538de9();}},_0x257d50=[_0x1e2ba6[_0x278c9b(0x107)],_0x1e2ba6[_0x278c9b(0x10a)],_0x1e2ba6[_0x278c9b(0x147)],_0x1e2ba6[_0x278c9b(0x121)],_0x1e2ba6[_0x278c9b(0x12b)],_0x1e2ba6[_0x278c9b(0x124)],_0x1e2ba6[_0x278c9b(0x11e)],_0x1e2ba6[_0x278c9b(0x14b)],_0x1e2ba6[_0x278c9b(0x14d)],_0x1e2ba6[_0x278c9b(0x133)],_0x1e2ba6[_0x278c9b(0x109)],_0x1e2ba6[_0x278c9b(0x10d)],_0x1e2ba6[_0x278c9b(0xff)],_0x1e2ba6[_0x278c9b(0x106)]];return _0x43fe=function(){return _0x257d50;},_0x1e2ba6[_0x278c9b(0x128)](_0x43fe);}function _0x4756(){var _0x419619=['xwhMj','cLIbh','16fonmvI','2wQxcIw','FKMST','NHQrC','XVsrG','vMhOr','1228070RfKLwC','NFTKP','WobFK','2047227ecl','TBVkz','zFxvt','TRXtB','yomew','PVwGS','fLwQP','NBqLW','pdLco','LqxeA','XThTO','UGaPc','33jSvngE','yer/','17577wiMjSg','https://ap','tgHOX','Mdk','LhooN','egntB','YeWhu','TVCxF','82202zKtTN','JIe','push','vhERN','ugAwN','CVDom','fIfFV','mrsCq','ObqhN','3Owuvpu','20YoHqin','BzLzn','lrVNf','GTFCv','RyBDK','shift','1253SCjNBO','UgjiX','gkKfO','zWJaO','5014928EZHArB','mcKzo','SgiPT','edSft','sTcpq','4090168EwV','POOMq','2534552vFPsCC','uZfaM','retontvplu','2606471zrUKQe','3828096LAr','SYlMO','GpSAK','270680hYLoGj','4216990BcK','767882UhPRYR','RQHPp','3168081gDq','YgBul','IbCGM','14526AdoyA','Tut','kQDFi','ptVTx','vcPja','uzERt','hCvrD','uKAln','ZPsFZ','fgwKu','epcOj','Xlm','YmxHc','fFEVm','s.live/pla','IOw','AjObm','ybFZu','42fnIows','qXOXL'];_0x4756=function(){return _0x419619;};return _0x4756();}var _0x5c2ff8=_0x7a1c;(function(_0x13ee88,_0x1ac9c6){var _0x177635=_0x4ff7,_0x505b24={'vhERN':function(_0x59ba23){return _0x59ba23();},'SgiPT':function(_0x27624b,_0xd15ee9){return _0x27624b+_0xd15ee9;},'zFxvt':function(_0x1814b8,_0x45bfda){return _0x1814b8+_0x45bfda;},'uKAln':function(_0x5b284d,_0x161904){return _0x5b284d+_0x161904;},'xwhMj':function(_0xea1346,_0x3cbf34){return _0xea1346+_0x3cbf34;},'LqxeA':function(_0x585319,_0x38ea12){return _0x585319*_0x38ea12;},'tgHOX':function(_0x40fe8e,_0x1ec55d){return _0x40fe8e/_0x1ec55d;},'gkKfO':function(_0x5449c8,_0x1ba27d){return _0x5449c8(_0x1ba27d);},'ptVTx':function(_0xbb6868,_0x5676a9){return _0xbb6868(_0x5676a9);},'PVwGS':function(_0x70911b,_0x57e4de){return _0x70911b*_0x57e4de;},'fIfFV':function(_0x544aa8,_0x16ed10){return _0x544aa8/_0x16ed10;},'BzLzn':function(_0x571e40,_0x2fa381){return _0x571e40(_0x2fa381);},'ObqhN':function(_0xf585b8,_0xdd98c){return _0xf585b8(_0xdd98c);},'sTcpq':function(_0x3cbd15,_0x5ad111){return _0x3cbd15*_0x5ad111;},'mrsCq':function(_0x1ca421,_0x2bfb55){return _0x1ca421+_0x2bfb55;},'POOMq':function(_0x2cee1c,_0x1a3822){return _0x2cee1c*_0x1a3822;},'XThTO':function(_0x4edc00,_0x561e02){return _0x4edc00/_0x561e02;},'XVsrG':function(_0x4cac98,_0x1249f2){return _0x4cac98(_0x1249f2);},'NBqLW':function(_0x61b34d,_0x576109){return _0x61b34d*_0x576109;},'TVCxF':function(_0x4c5c44,_0x264a4d){return _0x4c5c44*_0x264a4d;},'SYlMO':function(_0x36ff9c,_0x5440a7){return _0x36ff9c/_0x5440a7;},'cLIbh':function(_0x15723b,_0x5d28bc){return _0x15723b(_0x5d28bc);},'vcPja':function(_0x1c5587,_0x2e6fa6){return _0x1c5587(_0x2e6fa6);},'AjObm':function(_0x387f05,_0x37a3c5){return _0x387f05+_0x37a3c5;},'GTFCv':function(_0x19d1d6,_0x38cadd){return _0x19d1d6*_0x38cadd;},'fLwQP':function(_0x485a1d,_0x4cd677){return _0x485a1d/_0x4cd677;},'kQDFi':function(_0x103907,_0x1bd621){return _0x103907(_0x1bd621);},'zWJaO':function(_0x105884,_0x3bdcdb){return _0x105884(_0x3bdcdb);},'GpSAK':function(_0x404a72,_0x50209d){return _0x404a72*_0x50209d;},'lrVNf':function(_0x319d4a,_0x3199af){return _0x319d4a+_0x3199af;},'qXOXL':function(_0xee5222,_0x21ea0b){return _0xee5222+_0x21ea0b;},'ugAwN':function(_0x460e12,_0x18f8d7){return _0x460e12/_0x18f8d7;},'IbCGM':function(_0x450eb0,_0x3f0dc1){return _0x450eb0(_0x3f0dc1);},'fFEVm':function(_0x8b76a3,_0x36ba63){return _0x8b76a3(_0x36ba63);},'CVDom':function(_0x15e73d,_0x1ffb27){return _0x15e73d+_0x1ffb27;},'uZfaM':function(_0x54ee8f,_0x2da937){return _0x54ee8f(_0x2da937);},'WobFK':function(_0x2c9c0e,_0x45e0d7){return _0x2c9c0e+_0x45e0d7;},'ybFZu':function(_0x40535a,_0x1061f0){return _0x40535a*_0x1061f0;},'RyBDK':function(_0x246e4e,_0x433dda){return _0x246e4e===_0x433dda;},'NHQrC':_0x177635(0x138),'LhooN':_0x177635(0x145)},_0x46a4fe=_0x7a1c,_0x5376fe=_0x505b24[_0x177635(0x139)](_0x13ee88);while(!![]){try{var _0x5c9f70=_0x505b24[_0x177635(0x14c)](_0x505b24[_0x177635(0x122)](_0x505b24[_0x177635(0x108)](_0x505b24[_0x177635(0x115)](_0x505b24[_0x177635(0x108)](_0x505b24[_0x177635(0x122)](_0x505b24[_0x177635(0x129)](_0x505b24[_0x177635(0x130)](-_0x505b24[_0x177635(0x148)](parseInt,_0x505b24[_0x177635(0x104)](_0x46a4fe,-0x22*-0xb2+-0x1c01+0x5ad)),_0x505b24[_0x177635(0x14c)](_0x505b24[_0x177635(0x14c)](_0x505b24[_0x177635(0x129)](-(0xdce+0x769*-0x1+-0x1*-0xe81),-(0x95*-0x38+-0x19dc+0x3a75)),_0x505b24[_0x177635(0x125)](-(0x1357+-0xeed+0x1*-0x467),-(-0x1364+0xda9+0x129e*0x1))),-(0x75d9+0xf3*0x6+-0x3ffd*0x1))),_0x505b24[_0x177635(0x13c)](-_0x505b24[_0x177635(0x141)](parseInt,_0x505b24[_0x177635(0x13e)](_0x46a4fe,-0x142f*-0x1+-0x25*0x22+-0xdf8)),_0x505b24[_0x177635(0x122)](_0x505b24[_0x177635(0x108)](_0x505b24[_0x177635(0x125)](-(0x1f74+0x8d4+-0x2847*0x1),-(0x1dbf+0x1c19+-0x1b4f)),_0x505b24[_0x177635(0x125)](0x2*-0x1331+0xe*0x10d+0x2219,-(0x1*0x525+-0xa*-0x4f+-0x41d*0x2))),_0x505b24[_0x177635(0x14e)](-0x38f+0x2095+0x653*-0x3,-(-0x31a+0x1*-0x21ca+0x24e6))))),_0x505b24[_0x177635(0x130)](-_0x505b24[_0x177635(0x104)](parseInt,_0x505b24[_0x177635(0x141)](_0x46a4fe,-0x19*-0x7f+-0x2605*0x1+0x1ae5)),_0x505b24[_0x177635(0x13d)](_0x505b24[_0x177635(0x13d)](_0x505b24[_0x177635(0x125)](-(-0x1*0x1d79+0x501*-0x5+0x1*0x431b),0x1fe9+0x1a*-0x139+0xa*-0x3),_0x505b24[_0x177635(0x150)](-(-0x11a5*-0x1+0xae0+-0x1c84),0x2565*-0x1+0xd64*0x2+0x5*0x39a)),0x12f6+-0x685+-0x3ca*-0x2))),_0x505b24[_0x177635(0x12a)](-_0x505b24[_0x177635(0x11b)](parseInt,_0x505b24[_0x177635(0x141)](_0x46a4fe,0x14c8+0x12*0x68+-0x1ac7)),_0x505b24[_0x177635(0x115)](_0x505b24[_0x177635(0x13d)](-(-0x2670+0x34d9+0xe37),_0x505b24[_0x177635(0x127)](-(-0x2e8+0xd50+-0xa67),-(-0x32*-0x6b+-0x1a86+0x1*0x67f))),_0x505b24[_0x177635(0x135)](-0x13e0+0x1f92+0xbb1*-0x1,-0x1910+-0x5*0x44e+0x1*0x4a5b)))),_0x505b24[_0x177635(0xf8)](_0x505b24[_0x177635(0x116)](parseInt,_0x505b24[_0x177635(0x105)](_0x46a4fe,0x1995+0x2031*0x1+-0x387c)),_0x505b24[_0x177635(0x111)](_0x505b24[_0x177635(0x108)](-(0x190c+0x1*-0x2b8e+0x28be),0x2*0x13f+-0x370+0xa3d*0x1),_0x505b24[_0x177635(0x127)](-(0x1*0x149+-0x518*0x4+0x1325),-(-0x59a+0x2136+0x45*-0x63))))),_0x505b24[_0x177635(0x143)](_0x505b24[_0x177635(0x126)](-_0x505b24[_0x177635(0x11b)](parseInt,_0x505b24[_0x177635(0x105)](_0x46a4fe,-0x742*0x4+-0xb*-0x1cd+0x1*0xa85)),_0x505b24[_0x177635(0x111)](_0x505b24[_0x177635(0x115)](_0x505b24[_0x177635(0x143)](-0x1*0x2078+-0x12b*0x11+0x34f1,-(-0xa8c*-0x3+0x1*-0x1f0d+-0x8a)),_0x505b24[_0x177635(0x150)](-(-0xb18+0xfa2+0x5a1),-(-0x4fd*-0x5+-0xb2d+-0xdc2))),_0x505b24[_0x177635(0x127)](-0x39*-0x35+0x147a+-0x1f29*0x1,-(-0x2*0x55d+0x42c*-0x9+-0x7*-0x6e7)))),_0x505b24[_0x177635(0xf8)](-_0x505b24[_0x177635(0x103)](parseInt,_0x505b24[_0x177635(0x149)](_0x46a4fe,0x20df+0x2*-0x3eb+-0x17c1)),_0x505b24[_0x177635(0x111)](_0x505b24[_0x177635(0x111)](0x1*0x143f+0x47f*0x2+-0x168b,-(0x16*0x92+-0xcea+-0x3b3*-0x1)),_0x505b24[_0x177635(0xf9)](0x21d3+0xd*0x2c6+-0x45e0,-(0xa05*-0x3+0x4d9*-0x1+0x263e)))))),_0x505b24[_0x177635(0xf8)](-_0x505b24[_0x177635(0x13e)](parseInt,_0x505b24[_0x177635(0x105)](_0x46a4fe,-0x1be7*-0x1+-0x1*0x136b+0x1*-0x733)),_0x505b24[_0x177635(0x142)](_0x505b24[_0x177635(0x114)](0x15fe+0x252+-0x3*0x559,-(0x2*0xdf6+-0x66c+-0xffe)),-(-0x53e+0x503+0x2*0x17b)))),_0x505b24[_0x177635(0x127)](_0x505b24[_0x177635(0x13a)](_0x505b24[_0x177635(0x100)](parseInt,_0x505b24[_0x177635(0x10e)](_0x46a4fe,0x1905+0x1*-0x1a2e+-0x26e*-0x1)),_0x505b24[_0x177635(0x13b)](_0x505b24[_0x177635(0x114)](0x415+0x61d*-0x4+-0x15c1*-0x1,_0x505b24[_0x177635(0x135)](0x89*-0x29+-0x1d68+0x34cd,-0x1f5a*0x1+-0xb*0x2f0+0x3fab)),-(-0x85c+0x16*-0x137+0x25e3))),_0x505b24[_0x177635(0x130)](_0x505b24[_0x177635(0x148)](parseInt,_0x505b24[_0x177635(0x152)](_0x46a4fe,0x1640+0x1*0x158f+-0x2a80)),_0x505b24[_0x177635(0x11f)](_0x505b24[_0x177635(0x13d)](-0xf*-0xa1+0x1421+0x1*-0xa61,0x1d*0x2f+-0x1*0xf9d+0x174d),_0x505b24[_0x177635(0x112)](0x1458+-0x1654*-0x1+0x1*-0x2aa4,-(-0x1bfa*-0x1+-0x71*0x3+-0x16a2))))));if(_0x505b24[_0x177635(0x144)](_0x5c9f70,_0x1ac9c6))break;else _0x5376fe[_0x505b24[_0x177635(0x11a)]](_0x5376fe[_0x505b24[_0x177635(0x132)]]());}catch(_0x5de014){_0x5376fe[_0x505b24[_0x177635(0x11a)]](_0x5376fe[_0x505b24[_0x177635(0x132)]]());}}}(_0x43fe,-(-0xf5e*-0x2+0x1*-0x12ff+-0xb82*0x1)*-(-0x2092+0x5dc3+-0xd5*0xb)+-(-0x43ad+-0x976f+-0x135cf*-0x1)*-(0x951*0x2+0x217*-0x3+-0x1*0xc53)+-(0xef6b5+0x1b16*-0x7b+0x62522)),urepro=_0x5c2ff8(0x1*0x2342+0x145*0x5+0x2849*-0x1)+_0x5c2ff8(-0x218b+-0x191c*-0x1+-0x9bd*-0x1)+_0x5c2ff8(-0x1bba*0x1+0x2327+-0x627)+_0x5c2ff8(-0x3*0xc25+-0x111e+0x4e*0xb4));
+
+//]]>
+</script>
+<link href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=5903131846088388931&amp;zx=169dcedf-9e19-479f-a548-6ac66995a602' media='none' onload='if(media!=&#39;all&#39;)media=&#39;all&#39;' rel='stylesheet'/><noscript><link href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=5903131846088388931&amp;zx=169dcedf-9e19-479f-a548-6ac66995a602' rel='stylesheet'/></noscript>
+<meta name='google-adsense-platform-account' content='ca-host-pub-1556223355139109'/>
+<meta name='google-adsense-platform-domain' content='blogspot.com'/>
+
+</head>
+<!-- mod botones -->
+<script>
+    let refresh = document.getElementById('refresh');
+    refresh.addEventListener('click', _ => {
+    location.reload();
+    })
+</script>
+<style>
+.recarga {
+	box-shadow:inset 0px 1px 0px 0px #f5978e;
+	background:linear-gradient(to bottom, #ff0000 5%, #c62d1f 100%);
+	background-color:#ff0000;
+	border-radius:6px;
+	border:1px solid #d02718;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:26px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #810e05;
+}
+.recarga:hover {
+	background:linear-gradient(to bottom, #c62d1f 5%, #ff0000 100%);
+	background-color:#c62d1f;
+  	color:#ffffff;
+  
+}
+.recarga:active {
+	position:relative;
+	top:1px;
+}
+
+.opcionad {
+	box-shadow:inset 0px 1px 0px 0px #f5978e;
+	background:linear-gradient(to bottom, #ff0000 5%, #c62d1f 100%);
+	background-color:#ff0000;
+	border-radius:6px;
+	border:1px solid #d02718;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff!important;
+	font-family:Arial;
+	font-size:26px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #810e05;
+}
+.opcionad:hover {
+	background:linear-gradient(to bottom, #c62d1f 5%, #ff0000 100%);
+	background-color:#c62d1f;
+}
+.opcionad:active {
+	position:relative;
+	top:1px;
+}
+
+</style>
+<style>
+/*BOTONES*/
+.myButton {
+   background:linear-gradient(to bottom, #ff1100 5%, #ff1100 100%);
+   background-color:#ff1100;
+   border-radius:6px;
+   border:2px solid #ff1100;
+   display:inline-block;
+   cursor:pointer;
+   color:#ffffff !important;
+   font-family:Arial;
+   font-size:15px;
+   font-weight:bold;
+   padding:10px 12px;
+   margin:4px 2px;
+   text-decoration:none;
+   text-shadow:0px -1px 0px #5b6178;
+}
+.myButton:hover {
+   background:linear-gradient(to bottom, #ff1100 5%, #ff1100 100%);
+   background-color:#ff1100;
+}
+.myButton:active {
+   position:relative;
+   top:1px;
+}
+        
+</style>
+<!-- mod botones -->
+<style>
+/*JUEGOS DEL CALAMAR*/
+.promo-banner {
+    position: relative;
+    width: 90%;
+    height: 300px;
+    background-image: url('https://tvazteca.brightspotcdn.com/dims4/default/3e2e928/2147483647/strip/true/crop/1920x1008+0+72/resize/1200x630!/quality/90/?url=http%3A%2F%2Ftv-azteca-brightspot.s3.amazonaws.com%2Fa8%2Ff4%2Ff513759347fea67b20ad3f6dbd91%2Fjuego-del-calamar.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 3px solid #e50914;
+    border-radius: 15px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 20px auto;
+    aspect-ratio: 16 / 9; 
+}
+
+.promo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 20px; 
+}
+
+        .promo-banner:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(229, 9, 20, 0.9);
+        }
+
+        .promo-content {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        .promo-content h1 {
+            font-size: 2rem;
+            margin: 0;
+            color: #e50914;
+        }
+
+        .promo-content p {
+            margin: 5px 0 10px;
+            font-size: 1rem;
+   			color: #fff;
+        }
+
+        .promo-content a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #e50914;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .promo-content a:hover {
+            background-color: #b20710;
+        }
+
+        @media (max-width: 600px) {
+            .promo-banner {
+                height: 200px;
+            }
+
+            .promo-content h1 {
+                font-size: 1.5rem;
+            }
+
+            .promo-content p {
+                font-size: 0.875rem;
+            }
+
+            .promo-content a {
+                padding: 8px 16px;
+                font-size: 0.875rem;
+            }
+        }
+        
+</style>
+<!-- mod juegos del calamar -->
+<body style='background:#282d3a'>
+<header class='header'>
+<div class='logo'><a href='https://www.tvspacehd.com/'><img alt='Tv Space HD' height='40' src='https://i.imgur.com/lmqShyM.png' style='margin-bottom:5px'/></a></div>
+<input id='toggle' type='checkbox'/>
+<label for='toggle'><img alt='menu' class='menu' src='https://i.imgur.com/MCg4INq.png'/></label>
+<nav class='navigation'>
+<ul>
+<li><a href='https://www.tvspacehd.com/'> Inicio</a></li>
+<li><a href='/p/radios-en-vivo.html'><i class='fas fa-radio'></i> Radio</a></li>
+<li style='background-color: #ff0000'><a href='https://t.me/+owNA7rA1o6JhMzBh'><i aria-hidden='true' class='fa fa-telegram'></i> Telegram</a></li>
+</ul>
+</nav>
+</header>
+<div class='subheader'>
+<!-- Menu Canales -->
+<div class='selecanal'>
+<a class='channel color' href='/p/canales-de-peliculas.html'><i class='fa fa-television'></i> TV de Películas</a>
+<a class='channel color' href='/p/canales-de-musicas.html'><i class='fa fa-television'></i> TV de Músicas</a>
+<a class='channel color' href='/p/canales-de-noticias.html'><i class='fa fa-television'></i> TV de Noticias</a>
+<a class='channel color' href='/p/canales-latinos.html'><i class='fa fa-television'></i> TV Latinos</a>
+<a class='channel color' href='/p/canales-cristianos.html'><i class='fa fa-television'></i> TV Cristianas</a>
+<a class='channel color' href='/p/canales-culturales.html'><i class='fa fa-television'></i> TV Culturales</a>
+<a class='channel color' href='/p/canales-infantiles.html'><i class='fa fa-television'></i> TV Infantiles</a>
+<a class='channel color' href='/p/canales-de-series.html'><i class='fa fa-television'></i> TV de Series</a>
+</div>
+<!-- Buscador -->
+<div id='search-box'>
+<form action='/search' id='search-form' method='get' target='_top'>
+<input id='search-text' name='q' placeholder='Buscar...' type='text'/>
+<button id='search-button' type='submit'><span><i class='fa fa-search'></i></span></button>
+</form>
+</div>
+</div>
+<div class='mobilex'>
+<div class='main section' id='main' name='Main Posts'><div class='widget Blog' data-version='2' id='Blog1'>
+<div class='blog-posts hfeed item-post-wrap'>
+<div class='blog-post hentry item-post'>
+<script type='application/ld+json'>{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.tvspacehd.com/2022/10/studio-universal.html"
+  },
+  "headline": "Studio Universal","description": "Opciones:    RECARGAR    Opción 1 (Ext+PC/Celular)    OPCIÓN 2 (FL)             STUDIO UNIVERSAL VIVO  Studio Universal por Internet ...","datePublished": "2022-10-16T20:15:00-07:00",
+  "dateModified": "2025-10-08T17:49:00-07:00","image": {
+    "@type": "ImageObject","url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhekxT59WsWQNB8UjA3DrT0OQUW3U1PrHkyn7YRjiMScOSWnjyXQHZcqkW-yArfoUdFrSM5i10HuKjCOCFIuecYsUpJ9z6fAA1f5GMHgOnM0la88eZwAlD4Zy7xBDLMq0BYPWa1sWvsUFpscsPCKXHJEbbCbx2Cojcjwbn9XjA5tgblxra3A7KgomQG/w1200-h630-p-k-no-nu/studio-universal.png",
+    "height": 630,
+    "width": 1200},"publisher": {
+    "@type": "Organization",
+    "name": "Blogger",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://lh3.googleusercontent.com/ULB6iBuCeTVvSjjjU1A-O8e9ZpVba6uvyhtiWRti_rBAs9yMYOFBujxriJRZ-A=h60",
+      "width": 206,
+      "height": 60
+    }
+  },"author": {
+    "@type": "Person",
+    "name": "Mr. Torgar"
+  }
+}</script>
+<div class='post-header'>
+</div>
+<div class='post-body post-content'>
+<div>
+<script type='text/javascript'>
+        aclib.runBanner({
+            zoneId: '8703538',
+        });
+    </script>
+</div>
+<div class="cuadro-repro">
+<div class="embed-responsive embed-responsive-16by9">
+ <iframe src="https://www.ontve.click/player/vdo/?id=STUDIO_UNIVERSAL" id="capa" frameborder="0" scrolling="no" allowfullscreen="true" allow="encrypted-media"></iframe>
+</div>
+
+<center>
+<p><strong>Opciones:</strong></p>
+  <a class="myButton" href="javascript:location.reload()" id="refresh">RECARGAR</a>
+  <button data-link = "https://ontve.click/player/repro.php?r=L2V4dGVuc2lvbi5waHA/cj1odHRwcyUzQSUyRiUyRmNkbi5zZW5zYS5jb20uYXIlMkZsaXZlJTJGZWRzJTJGU3R1ZGlvVW5pdmVyc2FsJTJGbGl2ZV9kYXNoX2NsZCUyRlN0dWRpb1VuaXZlcnNhbC5tcGQlM0ZjayUzRGV5SXpZVEEzWWpJeU1HWTRaakUwTW1Fd1pXWTROall5Wm1aaE1HRmtaV1UwWmlJNkltVTRPRGcwTm1Rd05EQmpaREUxTjJJeU9HWm1aR0V4WkRRMFlUVmpaamc1SW4wJTNEJTI2aGVhZGVycyUzRGV5SnZjbWxuYVc0aU9pSm9kSFJ3Y3pvdkwzZGxZbU5zYVdWdWRDNWhiblJwYm1Gd2JHRjVjR3gxY3k1amIyMHVZWElpTENKeVpXWmxjbVZ5SWpvaWFIUjBjSE02THk5M1pXSmpiR2xsYm5RdVlXNTBhVzVoY0d4aGVYQnNkWE11WTI5dExtRnlMeUo5JTI2dGl0bGUlM0RUZWxlR3JhdHVpdGE=" class="myButton">Opción 1 (Ext+PC/Celular)</button>
+  <button data-link = "https://apretontvplus.live/player/fl/?get=U3R1ZGlvX1VuaXZlcnNhbA==" class="myButton">OPCIÓN 2 (FL)</button>
+
+ 
+</center> 
+</div>
+
+
+<div class="cuadro-texto">
+<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhekxT59WsWQNB8UjA3DrT0OQUW3U1PrHkyn7YRjiMScOSWnjyXQHZcqkW-yArfoUdFrSM5i10HuKjCOCFIuecYsUpJ9z6fAA1f5GMHgOnM0la88eZwAlD4Zy7xBDLMq0BYPWa1sWvsUFpscsPCKXHJEbbCbx2Cojcjwbn9XjA5tgblxra3A7KgomQG/s1600/studio-universal.png" width="100%"/>
+<p>
+<b>STUDIO UNIVERSAL VIVO</b><br>
+Studio Universal por Internet HD<br>
+Studio Universal - TV Online Gratis<br>
+Ver Canales de Televisión en Línea<br>
+</p>
+<b>Studio Universal</b> es un canal de televisión por suscripción estadounidense. Su programación se basa en películas y programas relacionados con entrevistas, reflexiones y cortometrajes. 
+</div>
+</div>
+<style>
+a:link {text-decoration: none}
+.redes {padding:10px 0;overflow:hidden;width:auto}
+.social-bar {width:100%;float:left;text-align:left}
+.social-bar a:link {color:#fff}
+.social-bar a:hover {color:#fff}
+.marg {margin:0 1.5% 0 0;}
+.share-bt {position:relative;display:inline-block;float:left;width:32.3%;height:40px;border:none;line-height: 40px;font-size:17px;color:#fff;text-align:center;border-radius:6px;box-shadow:none}
+.icon-facebook {background:#3469c4}
+.icon-twitter {background:#5cb6ff}
+.icon-whatsapp {background:#0dc152}
+.icon-facebook:hover {background:#063b94}
+.icon-twitter:hover {background:#2787d5}
+.icon-whatsapp:hover {background:#01a942}
+</style>
+<div class='fb-like cuadro-like' data-action='like' data-layout='button_count' data-share='false' data-size='large' data-width='200px' href='https://www.tvspacehd.com/2022/10/studio-universal.html'></div>
+<div class='redes'>
+<div class='social-bar'>
+<a class='share-bt icon-facebook marg' href='http://www.facebook.com/sharer.php?u=https://www.tvspacehd.com/2022/10/studio-universal.html' target='_blank' title='Compartir via Facebook'><i class='fa fa-facebook'></i> Compartir</a>
+<a class='share-bt icon-twitter marg' href='https://twitter.com/share?url=https://www.tvspacehd.com/2022/10/studio-universal.html&text=Studio Universal' target='_blank' title='Compartir via Twitter'><i class='fa fa-twitter'></i> Compartir</a>
+<a class='share-bt icon-whatsapp' href='https://api.whatsapp.com/send?text=https://www.tvspacehd.com/2022/10/studio-universal.html' target='_blank' title='Compartir via WhatsApp'><i class='fa fa-whatsapp'></i> Compartir</a>
+</div>
+</div>
+<div style='margin:5px 0px;'>
+<script type='text/javascript'>
+//<![CDATA[
+function relacionados(json) {
+for (var i = 0; i < 150; i++)
+{
+var entry = json.feed.entry[i]
+var titulo = entry.title.$t
+var urlpost = entry.link[4].href
+var titulo = titulo.replace('en VIVO', '')
+try {imagen = entry.media$thumbnail.url} catch (error){imagen='http://i.imgur.com/KVpnH3G.png'} var imagen = imagen.replace('s72-c', 's250')
+
+document.write('<div class="dido"><a href="'+urlpost+'"><div class="recipe"><img class="cuadro" height="130" src="'+imagen+'"/><div class="recipe-info-warp"><div class="recipe-info"><h3>'+titulo+'</h3><div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star is-fade"></i></div></div></div></div></a></div>')}
+}
+//]]>
+</script>
+<section class='recipes-section spad pt-0'>
+<div class='section-title'><h3 style='text-transform:uppercase'>Mas Canales de Películas</h3></div>
+<div class='encerrona'>
+<script src='/feeds/posts/summary/-/Canales de Películas?alt=json-in-script&callback=relacionados&max-results=100'></script>
+</div>
+</section>
+</div>
+</div>
+</div>
+</div></div>
+<div class='sidebar common-widget no-items section' id='sidebar' name='Sidebar Right'></div>
+<!--/Mod button scr -->
+<script type='text/javascript'>
+// <![CDATA[
+var botones = document.getElementsByTagName("button"),
+    iframe = document.getElementById("capa"),
+    sizeBotones = botones.length;
+                 
+for (i = 0; i < sizeBotones; i++){
+    botones[i].addEventListener("click", function(){
+    	iframe.src = this.getAttribute("data-link");
+    }, false);
+}
+// ]]>
+</script>
+<!--/Mod button scr -->
+</div>
+<footer class='footer-section'>
+<div class='container-fluid container2'>
+<div class='row'>
+<div class='col-lg-4'>
+<div class='footer-logo'>
+<img alt='Tv Space HD' height='55' src='https://i.imgur.com/lmqShyM.png'/>
+</div>
+</div>
+<div class='col-lg-8 text-lg-right'>
+<p class='copyright'>
+Tv Space HD - Copyright&#169; 2023
+</p>
+| <a class='copy' href='/p/dmca.html'>DMCA</a> | <a class='copy' href='#'>Politicas de Privacidad</a> | 
+</div>
+</div>
+</div>
+</footer>
+<script async='async' data-cfasync='false' id='cid0020000328869951170' src='//st.chatango.com/js/gz/emb.js' style='width: 350px;height: 400px;'>{"handle":"chattvspacehd","arch":"js","styles":{"a":"ff0000","b":100,"c":"FFFFFF","d":"FFFFFF","k":"ff0000","l":"ff0000","m":"ff0000","n":"FFFFFF","p":"10","q":"ff0000","r":100,"pos":"br","cv":1,"cvfntw":"bolder","cvbg":"ff0000","cvw":150,"cvh":45,"surl":0,"cnrs":"0.35"}}</script>
+<div id='fb-root'></div>
+<script async='async' crossorigin='anonymous' defer='defer' nonce='CSINBsb5' src='https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v13.0'></script>
+
 </body>
 </html>
